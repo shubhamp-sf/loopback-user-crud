@@ -3,7 +3,7 @@ import {Entity, model, property} from '@loopback/repository';
 enum Role {
   SuperAdmin = 1,
   Admin,
-  Subscriber
+  Subscriber,
 }
 
 @model()
@@ -23,9 +23,7 @@ export class User extends Entity {
 
   @property({
     type: 'string',
-    jsonSchema: {
-      default: "-"
-    }
+    default: '',
   })
   middleName: string;
 
@@ -56,17 +54,16 @@ export class User extends Entity {
     type: 'number',
     jsonSchema: {
       enum: Object.values(Role),
-      default: Role.Subscriber
-    }
+    },
+    default: Role.Subscriber,
   })
-  role: number;
+  role: Role;
 
   @property({
     type: 'date',
     required: true,
   })
   dob: string;
-
 
   constructor(data?: Partial<User>) {
     super(data);
