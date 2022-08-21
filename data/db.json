@@ -1,0 +1,11 @@
+{
+  "ids": {
+    "User": 3
+  },
+  "models": {
+    "User": {
+      "1": "{\"firstName\":\"Shubham\",\"lastName\":\"Dev\",\"email\":\"hi@shubhamp.dev\",\"phone\":8319505750,\"dob\":\"2018-03-20T09:12:28.000Z\",\"id\":1}",
+      "2": "{\"firstName\":\"Shubham\",\"lastName\":\"Dev\",\"email\":\"hi@shubhamp.dev\",\"phone\":8319505750,\"dob\":\"2018-03-20T09:12:28.000Z\",\"id\":2}"
+    }
+  }
+}
