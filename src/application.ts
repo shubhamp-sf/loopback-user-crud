@@ -8,6 +8,7 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
+import {RequestLoggerSequence} from './request-logger.sequence';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};
@@ -20,6 +21,7 @@ export class UserCrudApplication extends BootMixin(
 
     // Set up the custom sequence
     this.sequence(MySequence);
+    this.sequence(RequestLoggerSequence);
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
