@@ -7,7 +7,7 @@ enum Role {
 }
 
 @model({
-  settings: {postgresql: {schema: 'public', table: 'user'}},
+  settings: {postgresql: {schema: 'public', table: 'users'}},
 })
 export class User extends Entity {
   @property({
@@ -15,7 +15,7 @@ export class User extends Entity {
     id: true,
     generated: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
