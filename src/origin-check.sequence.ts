@@ -18,6 +18,8 @@ export class OriginCheckSequence extends MiddlewareSequence {
       }
     }
 
+    console.log('Allowed origins:', allowedOrigins, 'Referer origin:', origin);
+
     if (allowed) {
       await super.handle(context);
     } else {

@@ -24,7 +24,6 @@ export class UserCrudApplication extends BootMixin(
     dotEnvExtended.load({
       schema: '.env.example',
     });
-    console.log(process.env.ALLOWED_ORIGINS);
     super(options);
 
     // Set up the custom sequence
