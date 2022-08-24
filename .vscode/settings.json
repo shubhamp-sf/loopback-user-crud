@@ -16,6 +16,7 @@
     "**/.svn": true,
     "**/CVS": true,
     "dist": true,
+    "node_modules": true
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
