@@ -1,11 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
 
-enum Role {
-  SuperAdmin = 1,
-  Admin,
-  Subscriber,
-}
-
 @model({
   settings: {postgresql: {schema: 'public', table: 'users'}},
 })
@@ -58,15 +52,6 @@ export class User extends Entity {
     },
   })
   phone: number;
-
-  @property({
-    type: 'number',
-    jsonSchema: {
-      enum: Object.values(Role),
-    },
-    default: Role.Subscriber,
-  })
-  role: Role;
 
   @property({
     type: 'date',
