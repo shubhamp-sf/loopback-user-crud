@@ -1,4 +1,10 @@
 import {ApplicationConfig, UserCrudApplication} from './application';
+import {initialData} from './initialData';
+import {
+  CustomerRepository,
+  RoleRepository,
+  UserRepository,
+} from './repositories';
 
 export * from './application';
 
@@ -6,6 +12,30 @@ export async function main(options: ApplicationConfig = {}) {
   const app = new UserCrudApplication(options);
   await app.boot();
   await app.migrateSchema({existingSchema: 'drop'});
+
+  // seed data
+  const seeder = [
+    {
+      repository: RoleRepository,
+      rows: initialData.roles,
+    },
+    {
+      repository: UserRepository,
+      rows: initialData.users,
+    },
+    {
+      repository: CustomerRepository,
+      rows: initialData.customers,
+    },
+  ];
+
+  for (const data of seeder) {
+    const repoInstance = await app.getRepository<
+      UserRepository | RoleRepository | CustomerRepository
+    >(data.repository);
+    await repoInstance.createAll(data.rows);
+  }
+  // ../seed data
   await app.start();
 
   const url = app.restServer.url;
