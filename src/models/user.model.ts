@@ -1,17 +1,35 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Customer} from './customer.model';
 
-enum Role {
-  SuperAdmin = 1,
-  Admin,
-  Subscriber,
-}
-
-@model()
+@model({
+  settings: {
+    postgresql: {
+      schema: 'public',
+      table: 'users',
+    },
+    foreignKeys: {
+      targetCustomer: {
+        name: 'targetCustomer',
+        entity: 'Customer', // class name of second table
+        entityKey: 'id',
+        foreignKey: 'customerid', // in lowercase
+        onDelete: 'SET NULL',
+      },
+      targetRole: {
+        name: 'targetRole',
+        entity: 'Role', // class name of second table
+        entityKey: 'id',
+        foreignKey: 'roleid', // in lowercase
+        onDelete: 'SET NULL',
+      },
+    },
+  },
+})
 export class User extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: number;
 
@@ -47,23 +65,29 @@ export class User extends Entity {
   @property({
     type: 'number',
     required: true,
+    jsonSchema: {
+      minLength: 10,
+      errorMessage: 'Phone should be of 10 digits.',
+    },
+    postgresql: {
+      dataType: 'bigint',
+    },
   })
   phone: number;
-
-  @property({
-    type: 'number',
-    jsonSchema: {
-      enum: Object.values(Role),
-    },
-    default: Role.Subscriber,
-  })
-  role: Role;
 
   @property({
     type: 'date',
     required: true,
   })
   dob: string;
+
+  @belongsTo(() => Customer, {name: 'targetCustomer'})
+  customerId: number;
+
+  @property({
+    type: 'number',
+  })
+  roleId?: number;
 
   constructor(data?: Partial<User>) {
     super(data);
