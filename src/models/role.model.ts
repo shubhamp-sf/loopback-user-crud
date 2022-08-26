@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {User} from './user.model';
 
 export enum Roles {
   SuperAdmin = 1,
@@ -36,6 +37,9 @@ export class Role extends Entity {
     type: 'string',
   })
   description?: string;
+
+  @hasMany(() => User)
+  users: User[];
 
   constructor(data?: Partial<Role>) {
     super(data);

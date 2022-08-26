@@ -15,6 +15,13 @@ import {Customer} from './customer.model';
         foreignKey: 'customerid', // in lowercase
         onDelete: 'SET NULL',
       },
+      targetRole: {
+        name: 'targetRole',
+        entity: 'Role', // class name of second table
+        entityKey: 'id',
+        foreignKey: 'roleid', // in lowercase
+        onDelete: 'SET NULL',
+      },
     },
   },
 })
@@ -76,6 +83,11 @@ export class User extends Entity {
 
   @belongsTo(() => Customer, {name: 'targetCustomer'})
   customerId: number;
+
+  @property({
+    type: 'number',
+  })
+  roleId?: number;
 
   constructor(data?: Partial<User>) {
     super(data);

@@ -43,6 +43,18 @@ seedData.users = [
     address: 'India',
     phone: 8319505750,
     customerId: 1,
+    roleId: 1,
+  },
+  {
+    firstName: 'John',
+    middleName: '',
+    lastName: 'Doe',
+    email: 'john@sf.dev',
+    dob: new Date('2022-08-26').toISOString(),
+    address: 'India',
+    phone: 9876543210,
+    customerId: 1,
+    roleId: 2,
   },
 ];
 
