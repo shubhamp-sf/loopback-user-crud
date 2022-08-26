@@ -11,7 +11,11 @@ export * from './application';
 export async function main(options: ApplicationConfig = {}) {
   const app = new UserCrudApplication(options);
   await app.boot();
-  await app.migrateSchema({existingSchema: 'drop'});
+
+  await app.migrateSchema({
+    existingSchema: 'alter',
+    models: ['Role', 'Customer', 'User'],
+  });
 
   // seed data
   const seeder = [
@@ -20,12 +24,12 @@ export async function main(options: ApplicationConfig = {}) {
       rows: initialData.roles,
     },
     {
-      repository: UserRepository,
-      rows: initialData.users,
-    },
-    {
       repository: CustomerRepository,
       rows: initialData.customers,
+    },
+    {
+      repository: UserRepository,
+      rows: initialData.users,
     },
   ];
 
@@ -33,7 +37,10 @@ export async function main(options: ApplicationConfig = {}) {
     const repoInstance = await app.getRepository<
       UserRepository | RoleRepository | CustomerRepository
     >(data.repository);
-    await repoInstance.createAll(data.rows);
+    const {count} = await repoInstance.count();
+    if (count === 0) {
+      await repoInstance.createAll(data.rows);
+    }
   }
   // ../seed data
   await app.start();

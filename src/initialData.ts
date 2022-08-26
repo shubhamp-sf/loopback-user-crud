@@ -25,6 +25,14 @@ seedData.roles = [
   },
 ];
 
+seedData.customers = [
+  {
+    name: 'Customer 1',
+    address: 'C1, India',
+    website: 'customer1.com',
+  },
+];
+
 seedData.users = [
   {
     firstName: 'Shubham',
@@ -34,13 +42,7 @@ seedData.users = [
     dob: new Date('2001-09-19').toISOString(),
     address: 'India',
     phone: 8319505750,
-  },
-];
-seedData.customers = [
-  {
-    name: 'Customer 1',
-    address: 'C1, India',
-    website: 'customer1.com',
+    customerId: 1,
   },
 ];
 
