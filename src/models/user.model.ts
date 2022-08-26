@@ -1,7 +1,22 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Customer} from './customer.model';
 
 @model({
-  settings: {postgresql: {schema: 'public', table: 'users'}},
+  settings: {
+    postgresql: {
+      schema: 'public',
+      table: 'users',
+    },
+    foreignKeys: {
+      targetCustomer: {
+        name: 'targetCustomer',
+        entity: 'Customer', // class name of second table
+        entityKey: 'id',
+        foreignKey: 'customerid', // in lowercase
+        onDelete: 'SET NULL',
+      },
+    },
+  },
 })
 export class User extends Entity {
   @property({
@@ -58,6 +73,9 @@ export class User extends Entity {
     required: true,
   })
   dob: string;
+
+  @belongsTo(() => Customer, {name: 'targetCustomer'})
+  customerId: number;
 
   constructor(data?: Partial<User>) {
     super(data);
